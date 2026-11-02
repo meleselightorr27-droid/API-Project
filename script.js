@@ -20,7 +20,7 @@ async function getMovies() {
 
         for (movie of json) {
            
-            if (movie.name.toLowerCase().includes(searchTerm)) {
+            if (movie.name.includes(searchTerm)) {
 
                 let divContainer = document.createElement("div");
                 divContainer.classList.add("card");
@@ -32,25 +32,48 @@ async function getMovies() {
                 titleHeader.textContent = movie.flag + " " + movie.name;
                 card.appendChild(titleHeader);
 
+                let circuit = document.createElement("p");
+                circuit.textContent = "CIRCUIT - " + movie.circuit;
+                card.appendChild(circuit);
+
+                let country = document.createElement("p");
+                country.textContent = "NATION - " + movie.country;
+                card.appendChild(country);
+
                 let round = document.createElement("p");
                 round.textContent = "Round: " + movie.round;
                 card.appendChild(round);
+                
+                let sprint = document.createElement("p");
+                sprint.textContent = "SPRINT WEEKEND - " + (movie.sprint ? "Yes" : "No");
+                card.appendChild(sprint)
 
-                let country = document.createElement("p");
-                country.textContent = "Country: " + movie.country;
-                card.appendChild(country);
+                let FP1 = document.createElement("p");
+                const FP1Date = new Date(movie.sessions.fp1);
+                FP1.textContent = "FP1 - " + FP1Date;
+                card.appendChild(FP1);
 
-                let circuit = document.createElement("p");
-                circuit.textContent = "Circuit: " + movie.circuit;
-                card.appendChild(circuit);
+                let FP2 = document.createElement("p");
+                const FP2Date = new Date(movie.sessions.fp2);
+                FP2.textContent = "FP2 - " + FP2Date;
+                card.appendChild(FP2);
+
+                let FP3 = document.createElement("p");
+                const FP3Date = new Date(movie.sessions.fp3);
+                FP3.textContent = "FP3 - " + FP3Date;
+                card.appendChild(FP3);
+
+                let qualifying = document.createElement("p");
+                const qualifyingDate = new Date(movie.sessions.qualifying);
+                qualifying.textContent = "QUALIFYING - " + qualifyingDate;
+                card.appendChild(qualifying);
 
                 let date = document.createElement("p");
-                date.textContent = "Race date: " + movie.utc;
+                const raceDate = new Date(movie.utc);
+                console.log(raceDate.toLocaleString());
+                date.textContent = "RACE - " + raceDate;
                 card.appendChild(date);
-
-                let sprint = document.createElement("p");
-                sprint.textContent = "Sprint weekend: " + (movie.sprint ? "Yes" : "No");
-                card.appendChild(sprint)
+                
 
                 divContainer.appendChild(card);
                 movieHolder.appendChild(divContainer);
